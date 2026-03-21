@@ -1,0 +1,20 @@
+.formContainer{
+  position: absolute;
+  bottom: 10px;
+  left: 35%;
+}
+
+.formContainer input{
+  padding: 12px;
+  margin-right: 10px;
+  width: 300px;
+  border: 1px solid grey;
+  border-radius: 5px;
+}
+
+.formContainer button{
+  padding: 13px;
+  border-radius: 50%;
+  border: 1px solid grey;
+}
+
