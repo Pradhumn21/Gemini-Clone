@@ -19,6 +19,9 @@ server.post('/get-data',async(req,res)=>{
     res.status(200).json({message:data.text || "NO response"})
  } catch (error) {
     console.error(error)
+    if(error.status === 503){
+        return res.status(503).json({ Error: "AI is busy right now. Please try again in a moment."})
+    }
     res.status(500).json({message:"internal server error"})
  }
 })

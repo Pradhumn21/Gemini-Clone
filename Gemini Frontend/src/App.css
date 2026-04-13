@@ -1,7 +1,18 @@
+.mainContainer{
+  height: 97vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.chatContainer{
+  margin: 10px;
+  flex: 1;
+}
+
 .formContainer{
-  position: absolute;
-  bottom: 10px;
-  left: 35%;
+ text-align: center;
+ position: sticky;
+ bottom: 0;
 }
 
 .formContainer input{
@@ -18,3 +29,25 @@
   border: 1px solid grey;
 }
 
+.userContainer{
+  width: fit-content;
+  margin-left: auto;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 7px;
+  background-color: lightgray;
+}
+
+.aiContainer{
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  padding: 10px;
+  border-radius: 7px;
+  padding-bottom: 50px;
+  margin-bottom: 10px;
+}
+
+@media (max-width:420px){
+ .formContainer input{
+  width: auto;
+ }
+}

@@ -1,16 +1,19 @@
 import { useState } from 'react'
 import './App.css'
+import ReactMarkdown from 'react-markdown'
 
 function App() {
 const[inputValue, setInputValue] = useState('')
 const[data,setData] = useState([]);
+const[isLoading,setIsLoading] = useState(false)
 
-function hanldeSubmit(event){
+function handleSubmit(event){
   event.preventDefault()
   let userMessage = {role:'user', content:inputValue}
   setData((prevMessages)=>[...prevMessages,userMessage])
+  setIsLoading(true)
 
-fetch('https://jsonplaceholder.typicode.com/posts',{
+fetch(import.meta.env.VITE_CONTENT_REQUEST,{
   method:'POST',
   headers:{
     'Content-Type':'application/json'
@@ -18,28 +21,36 @@ fetch('https://jsonplaceholder.typicode.com/posts',{
   body:JSON.stringify(userMessage)
 })
 .then(response=>response.json())
-.then(apiResponse=>setData((prevMessages)=>[...prevMessages,{role:'ai',content:apiResponse.body}]))
+.then(apiResponse=>{
+  console.log(apiResponse)
+  setData((prevMessages)=>[...prevMessages,{role:'ai',content:apiResponse.message}])
+  setIsLoading(false)
+})
 .catch(error=>console.log(error))
 setInputValue('')
 }
 
   return (
-    <>
-    <div>
-        {data.map((message)=>{
-           return <div className={`${message.role === 'user'?'userContainer':'aiContainer'}`}>
-             <div>{message.content}</div>
+    <div className='mainContainer'>
+      <div className='chatContainer'>
+        {data.map((message,index)=>{
+           return <div key={index} className={`${message.role === 'user'?'userContainer':'aiContainer'}`}>
+             <ReactMarkdown>{message.content}</ReactMarkdown>
            </div>
         })}
-      </div>
+    </div>
+
+        {isLoading && (
+          <div className="aiContainer">AI is typing...</div>
+        )}
     <div className='formContainer'>
-      <form onSubmit={hanldeSubmit}>
+      <form onSubmit={handleSubmit} className='form'>
         <input type="text" placeholder='Ask Anything...' 
         onChange={(e)=>{setInputValue(e.target.value)}} value={inputValue}/>
-        <button type='submit' disabled={!inputValue.trim()}>🔎</button>
+        <button type='submit' disabled={!inputValue.trim() || isLoading}>🔎</button>
       </form>
       </div>
-    </>
+    </div>
   )
 }
 
