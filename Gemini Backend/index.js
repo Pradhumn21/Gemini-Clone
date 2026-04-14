@@ -20,7 +20,7 @@ server.post('/get-data',async(req,res)=>{
  } catch (error) {
     console.error(error)
     if(error.status === 503){
-        return res.status(503).json({ Error: "AI is busy right now. Please try again in a moment."})
+        return res.status(503).json({ message: "AI is busy right now. Please try again in a moment."})
     }
     res.status(500).json({message:"internal server error"})
  }
